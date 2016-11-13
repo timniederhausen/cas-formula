@@ -1,6 +1,9 @@
 cas:
+  name: cas
   # default container: jetty
   container: jetty
+  war_file:
+    source: salt://myfiles/cas.war
   properties_file:
     source: salt://myfiles/cas.properties
     template: jinja

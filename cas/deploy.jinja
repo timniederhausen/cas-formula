@@ -4,8 +4,9 @@
 {% from 'jetty/map.jinja' import jetty with context %}
 
 {% set deploy = {
-  'directory': salt['file.join'](jetty.base_directory, 'webapps', 'cas.d'),
-  'log_directory': salt['file.join'](jetty.base_directory, 'logs', 'cas'),
+  'directory': salt['file.join'](jetty.base_directory, 'webapps', cas.name + '.d'),
+  'log_directory': salt['file.join'](jetty.base_directory, 'logs', cas.name),
+  'war': salt['file.join'](jetty.base_directory, 'webapps', cas.name + '.war'),
   'user': jetty.user,
   'group': jetty.group,
 } %}

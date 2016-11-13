@@ -1,6 +1,12 @@
 {% from 'cas/map.jinja' import cas, sls_block with context %}
 {% from 'cas/deploy.jinja' import deploy, deploy_requires %}
 
+cas_war:
+  file.managed:
+    - name: {{ deploy.war }}
+    {{ sls_block(cas.war_file) | indent(4) }}
+    {{ deploy_requires() | indent(4) }}
+
 cas_directory:
   file.directory:
     - name: {{ deploy.directory }}
@@ -23,6 +29,18 @@ cas_services_directory:
     - group: {{ deploy.group }}
     - makedirs: true
 {% endif %}
+
+cas_xml:
+  file.managed:
+    - name: {{ deploy.directory }}/cas.xml
+    - source: salt://cas/files/cas.xml
+    - template: jinja
+    - user: {{ deploy.user }}
+    - group: {{ deploy.group }}
+    - defaults:
+        name: {{ cas.name }}
+        context_path: {{ cas.context_path }}
+    {{ deploy_requires() | indent(4) }}
 
 cas_log4j2:
   file.managed:

@@ -2,5 +2,7 @@
 # vim: ft=yaml
 
 cas:
+  name: cas
+  context_path: cas
   container: jetty
   properties_file: {}
