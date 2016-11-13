@@ -30,9 +30,9 @@ cas_services_directory:
     - makedirs: true
 {% endif %}
 
-cas_xml:
+cas_war_xml:
   file.managed:
-    - name: {{ deploy.directory }}/cas.xml
+    - name: {{ deploy.xml }}
     - source: salt://cas/files/cas.xml
     - template: jinja
     - user: {{ deploy.user }}

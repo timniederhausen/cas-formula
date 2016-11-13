@@ -3,10 +3,13 @@
 {% if cas.container == 'jetty' %}
 {% from 'jetty/map.jinja' import jetty with context %}
 
+{% set webapps = salt['file.join'](jetty.base_directory, 'webapps') %}
+
 {% set deploy = {
-  'directory': salt['file.join'](jetty.base_directory, 'webapps', cas.name + '.d'),
+  'directory': salt['file.join'](webapps, cas.name + '.d'),
   'log_directory': salt['file.join'](jetty.base_directory, 'logs', cas.name),
-  'war': salt['file.join'](jetty.base_directory, 'webapps', cas.name + '.war'),
+  'war': salt['file.join'](webapps, cas.name + '.war'),
+  'xml': salt['file.join'](webapps, cas.name + '.xml'),
   'user': jetty.user,
   'group': jetty.group,
 } %}
