@@ -3,6 +3,6 @@
 
 cas:
   name: cas
-  context_path: cas
+  context_path: /cas
   container: jetty
   properties_file: {}
