@@ -1,14 +1,4 @@
-# -*- coding: utf-8 -*-
-# vim: ft=jinja
-
-{% import_yaml 'cas/defaults.yml' as defaults %}
-{% import_yaml 'cas/osmap.yml' as osmap %}
-
-{# get the settings for the os_family grain #}
-{% set osfam = salt['grains.filter_by'](osmap) or {} %}
-
-{# merge the os family/codename specific data over the defaults #}
-{% do defaults.cas.update(osfam) %}
+{% import_yaml 'cas/defaults.yaml' as defaults %}
 
 {# merge the pillar:lookup dict into the defaults/os specific dict #}
 {% set lookup = salt['pillar.get']('cas:lookup',
