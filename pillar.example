@@ -1,0 +1,10 @@
+cas:
+  # default container: jetty
+  container: jetty
+  properties_file:
+    source: salt://myfiles/cas.properties
+    template: jinja
+  # For the JSON service registry. Installation path: /services
+  json_services:
+    gerrit:
+      source: salt://myfiles/cas_services/gerrit.json

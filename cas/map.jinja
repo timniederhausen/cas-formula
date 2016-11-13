@@ -1,0 +1,25 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+{% import_yaml 'cas/defaults.yml' as defaults %}
+{% import_yaml 'cas/osmap.yml' as osmap %}
+
+{# get the settings for the os_family grain #}
+{% set osfam = salt['grains.filter_by'](osmap) or {} %}
+
+{# merge the os family/codename specific data over the defaults #}
+{% do defaults.cas.update(osfam) %}
+
+{# merge the pillar:lookup dict into the defaults/os specific dict #}
+{% set lookup = salt['pillar.get']('cas:lookup',
+                                   default=defaults.cas,
+                                   merge=True) %}
+
+{# merge the actual cas pillar into the above combined dict #}
+{% set cas = salt['pillar.get']('cas', default=lookup, merge=True) %}
+
+{% macro sls_block(dict) %}
+{% for key, value in dict.items() %}
+- {{ key }}: {{ value|json() }}
+{% endfor %}
+{% endmacro %}

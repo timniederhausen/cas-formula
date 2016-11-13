@@ -1,0 +1,19 @@
+{% from 'cas/map.jinja' import cas with context %}
+
+{% if cas.container == 'jetty' %}
+{% from 'jetty/map.jinja' import jetty with context %}
+
+{% set deploy = {
+  'directory': salt['file.join'](jetty.base_directory, 'webapps', 'cas.d'),
+  'log_directory': salt['file.join'](jetty.base_directory, 'logs', 'cas'),
+  'user': jetty.user,
+  'group': jetty.group,
+} %}
+
+{% macro deploy_requires() %}
+- requires:
+  - jetty
+- watch_in:
+  - jetty_service_reload
+{% endmacro %}
+{% endif %}
