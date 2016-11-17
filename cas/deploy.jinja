@@ -16,8 +16,8 @@
 
 {% macro deploy_requires() %}
 - requires:
-  - jetty
+  - pkg: jetty
 - watch_in:
-  - jetty_service_reload
+  - service: jetty_service
 {% endmacro %}
 {% endif %}
