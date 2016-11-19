@@ -54,12 +54,22 @@ cas_log4j2:
     {{ deploy_requires() | indent(4) }}
 
 cas_properties:
+{% if cas.properties_file %}
   file.managed:
     - name: {{ deploy.directory }}/cas.properties
     - user: {{ deploy.user }}
     - group: {{ deploy.group }}
     {{ sls_block(cas.properties_file) | indent(4) }}
     {{ deploy_requires() | indent(4) }}
+{% else %}
+  file.serialize:
+    - name: {{ deploy.directory }}/cas.yaml
+    - user: {{ deploy.user }}
+    - group: {{ deploy.group }}
+    - dataset_pillar: cas:properties
+    - formatter: yaml
+    {{ deploy_requires() | indent(4) }}
+{% endif %}
 
 {% if cas.json_services %}
 {% for name, opts in cas.json_services.items() %}

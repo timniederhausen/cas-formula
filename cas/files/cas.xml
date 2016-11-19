@@ -9,4 +9,9 @@
     <Arg>cas.properties.config.location</Arg>
     <Arg>file:<Property name="jetty.webapps" default="."/>/{{ name }}.d/cas.properties</Arg>
   </Call>
+
+  <Call name="setInitParameter">
+    <Arg>spring.cloud.config.server.native.searchLocations</Arg>
+    <Arg>file:<Property name="jetty.webapps" default="."/>/{{ name }}.d</Arg>
+  </Call>
 </Configure>
