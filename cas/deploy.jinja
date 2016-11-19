@@ -16,8 +16,19 @@
 
 {% macro deploy_requires() %}
 - requires:
-  - pkg: jetty
+    - pkg: jetty
 - watch_in:
-  - service: jetty_service
+    - service: jetty_service
+{% endmacro %}
+{% elif cas.container == 'standalone' %}
+{% set deploy = cas.standalone %}
+
+{% macro deploy_requires() %}
+- requires:
+    - user: cas_user
+    - group: cas_group
+    - file: cas_init_script
+- watch_in:
+    - service: cas_service
 {% endmacro %}
 {% endif %}

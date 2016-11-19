@@ -1,0 +1,7 @@
+FreeBSD:
+  standalone:
+    directory: /usr/local/etc/cas
+    log_directory: /var/log/cas
+    war: /usr/local/www/cas.war
+    user: cas
+    group: cas
